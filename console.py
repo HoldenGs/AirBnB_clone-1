@@ -138,30 +138,30 @@ class Hosh(cmd.Cmd):
 def find_attributes(new_obj, args):
     """
     Add extra attributes of the format:
-    $ create <classname> <param1="value"> <param2=number>
+        $ create <classname> <param1="value"> <param2=number>
     An indefinite number of arguments is allowed.
     """
     if len(args) > 1:
         i = 0
         for arg in args:
-            i +=  1
+            i += 1
             if i > 1:
                 if '=' in arg:
                     arg = arg.split('=')
-                    if arg[1][0] == '"' and arg[1][-1] == '"':
-                        name = arg[0]
-                        value = arg[1][1:-1]
+                    name = arg[0]
+                    value = arg[1][1:-1]
+                    try:
+                        value = int(value)
+                    except ValueError:
                         try:
-                            value = int(value)
+                            value = float(value)
                         except ValueError:
-                            try:
-                                value = float(value)
-                            except ValueError:
+                            if arg[1][0] == '"' and arg[1][-1] == '"':
                                 value = value.replace('_', ' ')
                                 setattr(new_obj, name, value)
-                    else:
-                        print("attribute of name {} needs quotes around it"
-                              .format(arg[1]))
+                            else:
+                                print("attribute of name {} needs quotes \
+                                around it".format(arg[1]))
     return new_obj
 
 
