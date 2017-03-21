@@ -244,7 +244,6 @@ def find_attributes(new_obj, args):
             if i > 1:
                 if '=' in arg:
                     arg = arg.split('=')
-                    if arg[1][0] == '"' and arg[1][-1] == '"':
                         name = arg[0]
                         value = arg[1][1:-1]
                         try:
@@ -253,11 +252,11 @@ def find_attributes(new_obj, args):
                             try:
                                 value = float(value)
                             except ValueError:
-                                value = value.replace('_', ' ')
-                                setattr(new_obj, name, value)
-                    else:
-                        print("attribute of name {} needs quotes around it"
-                              .format(arg[1]))
+                                if arg[1][0] == '"' and arg[1][-1] == '"':
+                                    value = value.replace('_', ' ')
+                                    setattr(new_obj, name, value)
+                                else:
+                                    pass
     return new_obj
 
 
