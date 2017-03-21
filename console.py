@@ -244,19 +244,19 @@ def find_attributes(new_obj, args):
             if i > 1:
                 if '=' in arg:
                     arg = arg.split('=')
-                        name = arg[0]
-                        value = arg[1][1:-1]
+                    name = arg[0]
+                    value = arg[1][1:-1]
+                    try:
+                        value = int(value)
+                    except ValueError:
                         try:
-                            value = int(value)
+                            value = float(value)
                         except ValueError:
-                            try:
-                                value = float(value)
-                            except ValueError:
-                                if arg[1][0] == '"' and arg[1][-1] == '"':
-                                    value = value.replace('_', ' ')
-                                    setattr(new_obj, name, value)
-                                else:
-                                    pass
+                            if arg[1][0] == '"' and arg[1][-1] == '"':
+                                value = value.replace('_', ' ')
+                                setattr(new_obj, name, value)
+                            else:
+                                pass
     return new_obj
 
 
