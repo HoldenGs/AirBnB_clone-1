@@ -1,10 +1,4 @@
-# AirBnB Clone
-
-**Purpose**
-
-The purpose of this project is to recreate the AirBnB site, from the back-end data management to the front-end user interface. 
-
-The project is currently in its first phase, where we are creating a command line interpretor to access objects that will store user data. Users can use the console to create objects, update object attributes, remove objects, list all objects, and store and read data from a .json file.
+Holberton HBnB: The BEST AirBnB clone out there!
 
 ----------------------------------------
 
@@ -14,7 +8,27 @@ The project is currently in its first phase, where we are creating a command lin
 
 ----------------------------------------
 
-In order to begin the console, you can run either 'python3 console.py' or './console.py' in the command line.
+This is a website clone of AirBnB, with the fundamental features implemented.
+It has a front-end, a database, an API for front-end to database communication,
+and a developer command line interface.
+
+The command line interface allows use of CRUD operations on the data objects in
+the database, as well as special operations like counting, computing stats,
+etc.
+
+
+---How to start CLI---
+
+
+---How to use CLI---
+
+To run the console, type in:
+```example-cli-$ ./console.py```
+
+
+---Examples of CLI---
+
+
 
 Classes that are currently supported include BaseModel, User, City, State, Amenity, Review, and Place.
 
