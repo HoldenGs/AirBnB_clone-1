@@ -243,6 +243,8 @@ def find_attributes(new_obj, args):
             if i > 1:
                 if '=' in arg:
                     arg = arg.split('=')
+                    if len(arg) > 2:
+                        continue
                     name = arg[0]
                     value = arg[1][1:-1]
                     try:
