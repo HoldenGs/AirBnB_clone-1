@@ -239,7 +239,7 @@ def find_attributes(new_obj, args):
     if len(args) > 1:
         i = 0
         for arg in args:
-            i +=  1
+            i += 1
             if '=' in arg and i >= 1:
                 arg = arg.split('=')
                 name = arg[0]
