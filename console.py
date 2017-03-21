@@ -240,24 +240,24 @@ def find_attributes(new_obj, args):
         i = 0
         for arg in args:
             i +=  1
-            if i > 1:
-                if '=' in arg:
-                    arg = arg.split('=')
-                    if len(arg) > 2:
-                        continue
-                    name = arg[0]
+            if '=' in arg and i >= 1:
+                arg = arg.split('=')
+                name = arg[0]
+                value = arg[1]
+                if arg[1][0] == '"' and arg[1][-1] == '"':
                     value = arg[1][1:-1]
+                    value = value.replace('_', ' ')
+                    setattr(new_obj, name, value)
+                else:
                     try:
                         value = int(value)
+                        setattr(new_obj, name, value)
                     except ValueError:
                         try:
                             value = float(value)
+                            setattr(new_obj, name, value)
                         except ValueError:
-                            if arg[1][0] == '"' and arg[1][-1] == '"':
-                                value = value.replace('_', ' ')
-                                setattr(new_obj, name, value)
-                            else:
-                                pass
+                            pass
     return new_obj
 
 
