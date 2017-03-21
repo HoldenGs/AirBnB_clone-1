@@ -22,8 +22,7 @@ etc.
 
 ---How to use CLI---
 
-To run the console, type in:
-```example-cli-$ ./console.py```
+To run the console, type in: ```$ ./console.py```
 
 
 ---Examples of CLI---
