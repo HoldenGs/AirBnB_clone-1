@@ -30,7 +30,6 @@ class HBNBCommand(cmd.Cmd):
         else:
             if len(args) > 0 and args[0] in HBNBCommand.valid_classes:
                 new_obj = eval(args[0])()
-                print('success!')
                 new_obj = find_attributes(new_obj, args)
                 print(new_obj.id)
                 new_obj.save()
