@@ -1,91 +1,56 @@
 #!/usr/bin/python3
+from models.user import User
+from models.amenity import Amenity
+from models.place import PlaceAmenity
+from models.place import Place
+from models.city import City
+from models.state import State
+from models.review import Review
 
-from os import getenv
-from sqlalchemy import (create_engine)
+from os import environ, getenv
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from models import *
+from models.base_model import Base
 
 
 class DBStorage:
     __engine = None
     __session = None
-    classes = [User, Amenity, Place, City, State, Review]
+    classes = {'User': User, 'Amenity': Amenity, 'Place': Place,
+               'City': City, 'State': State, 'Review': Review}
 
-    def init(self):
-        __engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
-                                 .format(gentenv(HBNB_MYSQL_USER),
-                                         getenv(HBNB_MYSQL_PWD),
-                                         getenv(HBNB_MYSQL_HOST),
-                                         getenv(HBNB_MYSQL_DB)))
-        if getenv(HBNB_MYSQL_ENV) == 'test':
-            Base.metadata.drop_all(__engine)
+    def __init__(self):
+        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
+                                 .format(environ['HBNB_MYSQL_USER'],
+                                         environ['HBNB_MYSQL_PWD'],
+                                         environ['HBNB_MYSQL_HOST'],
+                                         environ['HBNB_MYSQL_DB']))
+        if getenv('HBNB_MYSQL_ENV', None) == 'test':
+            Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
         objects = {}
         if cls == None:
-            for cls in classes:
-                for object in self.__session.query(cls):
+            for cls in self.classes:
+                cls = self.classes[cls]
+                for object in self.__session.query(cls).all():
                     objects[object.id] = object
         else:
-            for object in self.__session.query(cls):
-                object[object.id] = object
+            cls = self.classes[cls]
+            for object in self.__session.query(cls).all():
+                objects[object.id] = object
         return objects
 
     def new(self, obj):
-        elif type(obj) == 'Amenity':
-            __session.add(Amenity(id=obj.id,
-                                  created_at=obj.created_at,
-                                  updated_at=obj.updated_at,
-                                  name=obj.name))
-        elif type(obj) == 'City':
-            __session.add(City(id=obj.id,
-                               created_at=obj.created_at,
-                               updated_at=obj.updated_at,
-                               name=obj.name,
-                               state_id=obj.state_id))
-        elif type(obj) == 'Review':
-            __session.add(Review(id=obj.id,
-                                 created_at=obj.created_at,
-                                 updated_at=obj.updated_at,
-                                 text=obj.text,
-                                 place_id=obj.place_id,
-                                 user_id=obj.user_id))
-        elif type(obj) == 'State':
-            __session.add(State(id=obj.id,
-                                created_at=obj.created_at,
-                                updated_at=obj.updated_at,
-                                name=obj.name,
-                                cities=obj.cities))
-        elif type(obj) == 'User':
-            __session.add(User(id=obj.id,
-                               created_at=obj.created_at,
-                               updated_at=obj.updated_at,
-                               email=obj.email,
-                               password=obj.password,
-                               first_name=obj.first_name,
-                               last_name=obj.last_name,
-                               places=obj.places))
-        elif type(obj) == 'Place':
-            __session.add(Place(id=obj.id,
-                                created_at=obj.created_at,
-                                updated_at=obj.updated_at,
-                                city_id=obj.city_id,
-                                user_id=obj.user_id,
-                                name=obj.name,
-                                description=obj.description,
-                                number_rooms=obj.number_rooms,
-                                max_guest=obj.max_guest,
-                                price_by_night=obj.price_by_night,
-                                latitude=obj.latitude,
-                                longitude=obj.longitude,
-                                amenity=obj.amenity))
+        self.__session.add(obj)
 
     def save(self):
-        __session.commit()
+        self.__session.commit()
 
     def delete(self, obj=None):
-        __session.delete(obj)
+        self.__session.delete(obj)
 
     def reload(self):
-        Base.metadata.create_all(__engine)
-        __session = sessionmaker(bind=__engine)
+        Base.metadata.create_all(self.__engine)
+        Session = sessionmaker(bind=self.__engine)
+        self.__session = Session()

@@ -26,7 +26,7 @@ class FileStorage:
             fd.write(json.dumps(store))
 
     def delete(self, obj=None):
-        __objects.pop(obj, None)
+        self.__objects.pop(obj, None)
 
     def reload(self):
         try:
