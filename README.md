@@ -52,15 +52,21 @@ This data can be stored in two ways: SQL database and JSON file.
 
 ### Alternate Syntax:
 
-```(hbnb) <classname>.create()```
+
+
+#### Read:
 
 ```(hbnb) <classname>.all()```
 
 ```(hbnb) <classname>.show(<id>)```
 
+
+#### Update:
+
 ```(hbnb) <classname>.update(<id>, {dictionary_of_params})```
 
 ```(hbnb) <classnam>.update(<id>, <param1=value1, <param2=value2>, ...)```
+
 
 
 *Additionally, you can count the number of objects in a class like so:*
