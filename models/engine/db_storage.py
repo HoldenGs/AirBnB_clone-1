@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+from os import getenv
 from sqlalchemy import (create_engine)
 from sqlalchemy.orm import sessionmaker
 from models import *
@@ -12,9 +13,11 @@ class DBStorage:
 
     def init(self):
         __engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
-                               .format($HBNB_MYSQL_USER, $HBNB_MYSQL_PWD,
-                                       $HBNB_MYSQL_HOST, $HBNB_MYSQL_DB))
-        if $HBNB_MYSQL_ENV == 'test':
+                                 .format(gentenv(HBNB_MYSQL_USER),
+                                         getenv(HBNB_MYSQL_PWD),
+                                         getenv(HBNB_MYSQL_HOST),
+                                         getenv(HBNB_MYSQL_DB)))
+        if getenv(HBNB_MYSQL_ENV) == 'test':
             Base.metadata.drop_all(__engine)
 
     def all(self, cls=None):
