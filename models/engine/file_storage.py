@@ -22,9 +22,11 @@ class FileStorage:
         store = {}
         for k in FileStorage.__objects.keys():
             store[k] = FileStorage.__objects[k].to_json()
-
         with open(FileStorage.__file_path, mode="w", encoding="utf-8") as fd:
             fd.write(json.dumps(store))
+
+    def delete(self, obj=None):
+        __objects.pop(obj, None)
 
     def reload(self):
         try:
