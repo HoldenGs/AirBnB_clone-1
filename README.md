@@ -17,11 +17,11 @@ the database, as well as special operations like counting, computing stats,
 etc.
 
 
-### ---How to start console---
+### How to start console
 
 To run the console, type in: ```$ ./console.py```
 
-### ---How to use console---
+### How to use console
 
 The HBnB console supports the essential CRUD operations to manipulate data.
 This data can be stored in two ways: SQL database and JSON file.
