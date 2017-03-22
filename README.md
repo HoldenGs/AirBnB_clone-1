@@ -1,4 +1,4 @@
-Holberton HBnB: The BEST AirBnB clone out there!
+## Holberton HBnB: The BEST AirBnB clone out there!
 
 ----------------------------------------
 
@@ -17,31 +17,52 @@ the database, as well as special operations like counting, computing stats,
 etc.
 
 
----How to start CLI---
-
-
----How to use CLI---
+### ---How to start console---
 
 To run the console, type in: ```$ ./console.py```
 
+### ---How to use console---
 
----Examples of CLI---
+The HBnB console supports the essential CRUD operations to manipulate data.
+This data can be stored in two ways: SQL database and JSON file.
+
+
+#### Create:
+
+```(hbnb) create <classname> <optionalparam1=value1> <optionalparam2=value2> ...```
+
+
+#### Read:
+
+```(hbnb) all <optionalclassname>```
+
+```(hbnb) show <classname> <id>```
+
+
+#### Update:
+
+```(hbnb) update <classname> <id> <param1=value1> <param2=value2> ... <lastparam=lastvalue>```
+
+
+#### Delete:
+
+```(hbnb) destroy <classname> <id>```
 
 
 
-Classes that are currently supported include BaseModel, User, City, State, Amenity, Review, and Place.
+### Alternate Syntax:
 
-The console currently supports the following commands:
-- **create \<class name>**, which will create an object of the class declared by user;
-- **show \<class name> \<id>**, which will display the object information if it exists;
-- **destroy \<class name> \<id>**, which will delete the object if it exists;
-- **all \<class name>**, where the class name input is optional and the console will display all instances, or all instances of a specified object;
-- **update \<class name> \<id> \<attribute name> \<attribute value>**, whilch will update an instance attribute of a previously declared object.
+```(hbnb) <classname>.create()```
 
-Additionally, the console also supports the following command formats:
-- **\<class name>.all()**, which will display all instances of the specified class;
-- **\<class name>.count()**, whilch will display the number of instances of the specified class;
-- **\<class name>.show(\<id>)**, whilch will display the instance with correct id and class;
-- **\<class name>.destroy(\<id>)**, which will delete the instance with correct id and class;
-- **\<class name>.update(\<id>, \<attribute name>, \<attribute value>)**, which will update an instance of the given class and id with the new attribute;
-- **\<class name>.update(\<id>, \<dictionary representation>)**, which will update an instance of the given class and id with a dictionary of key value pairs that will be new attributes for the objects. 
+```(hbnb) <classname>.all()```
+
+```(hbnb) <classname>.show(<id>)```
+
+```(hbnb) <classname>.update(<id>, {dictionary_of_params})```
+
+```(hbnb) <classnam>.update(<id>, <param1=value1, <param2=value2>, ...)```
+
+
+*Additionally, you can count the number of objects in a class like so:*
+
+```(hbnb) <classname>.count()```
