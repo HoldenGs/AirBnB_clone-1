@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 from models import *
-from sqlalchemy import Column, String, Integer, Float, orm.relationship
+from sqlalchemy import Column, String, Integer, Float
+from sqlalchemy.orm import relationship
 from sqlalchemy import ForeignKey
 from models.base_model import Base
 
@@ -25,7 +26,7 @@ class Place(BaseModel, Base):
     price_by_night = Column(Integer, default=0, nullable=False)
     latitude = Column(Float, nullable=False)
     longitude = Column(Float, nullable=False)
-    amenities = orm.relationship('Amenity', secondary='place_amenity',
+    amenities = relationship('Amenity', secondary='place_amenity',
                                  viewonly=True)
 
     def __init__(self, *args, **kwargs):
