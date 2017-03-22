@@ -7,7 +7,7 @@ from models.base_model import Base
 class City(BaseModel, Base):
     __tablename__ = 'cities'
     state_id = Column(String(60), nullable=False)
-    name = Column(String(128), nullable=False, ForeignKey('states.id'))
+    name = Column(String(128), ForeignKey('states.id'), nullable=False)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
