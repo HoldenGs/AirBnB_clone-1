@@ -21,21 +21,16 @@ class DBStorage:
 
     def __init__(self):
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
-                                 .format(environ['HBNB_MYSQL_USER'],
-                                         environ['HBNB_MYSQL_PWD'],
-                                         environ['HBNB_MYSQL_HOST'],
-                                         environ['HBNB_MYSQL_DB']))
+                                      .format(environ['HBNB_MYSQL_USER'],
+                                              environ['HBNB_MYSQL_PWD'],
+                                              environ['HBNB_MYSQL_HOST'],
+                                              environ['HBNB_MYSQL_DB']))
         if getenv('HBNB_MYSQL_ENV', None) == 'test':
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
         objects = {}
-        if cls == None:
-            for cls in self.classes:
-                cls = self.classes[cls]
-                for object in self.__session.query(cls).all():
-                    objects[object.id] = object
-        else:
+        for cls in self.classes:
             cls = self.classes[cls]
             for object in self.__session.query(cls).all():
                 objects[object.id] = object
