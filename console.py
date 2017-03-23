@@ -5,7 +5,6 @@ from models import *
 
 class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb)'
-    storage.reload()
 
     valid_classes = ["BaseModel", "User", "State",
                      "City", "Amenity", "Place", "Review"]
