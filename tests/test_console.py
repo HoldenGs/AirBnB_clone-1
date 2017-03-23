@@ -19,6 +19,8 @@ def captured_output():
 
 
 class Test_Console(unittest.TestCase):
+    objects = []
+
     """
     Test the console
     """
@@ -26,25 +28,56 @@ class Test_Console(unittest.TestCase):
     def setUp(self):
         self.cli = HBNBCommand()
 
+    def tearDown(self):
+        for obj_id in self.objects:
+            self.cli.do_destroy('BaseModel {}'.format(obj_id))
+
+    def test_quit(self):
+        with self.assertRaises(SystemExit):
+            self.cli.do_quit(self.cli)
+
+    def test_create_basic(self):
+        with captured_output() as (out, err):
+            self.cli.do_create('')
+        output = out.getvalue().strip()
+        self.assertEqual(output, "Usage: create BaseModel")
+
+        # Create
+        with captured_output() as (out, err):
+            self.cli.do_create("BaseModel")
+        output = out.getvalue().strip()
+        self.objects.append(output)
+
+        with captured_output() as (out, err):
+            self.cli.do_show('BaseModel {}'.format(output))
+        output2 = out.getvalue().strip()
+        self.assertTrue(output in output2)
+
+    def test_create_with_params(self):
+        with captured_output() as (out, err):
+            self.cli.do_create('BaseModel name="Rough_Model" \
+            number=9 float=20.7')
+        output = out.getvalue().strip()
+        self.objects.append(output)
+
+        with captured_output() as (out, err):
+            self.cli.do_show('BaseModel {}'.format(output))
+        output = out.getvalue().strip()
+        self.assertTrue('Rough Model' in output)
+        self.assertTrue("'number': 9")
+        self.assertTrue("'float': 20.7")
+
+    def test_show_correct(self):
         test_args = {'updated_at': datetime(2017, 2, 11, 23, 48, 34, 339879),
                      'id': 'd3da85f2-499c-43cb-b33d-3d7935bc808c',
                      'created_at': datetime(2017, 2, 11, 23, 48, 34, 339743),
                      'name': 'Ace'}
         self.model = BaseModel(test_args)
         self.model.save()
-
-    def tearDown(self):
-        self.cli.do_destroy("BaseModel d3da85f2-499c-43cb-b33d-3d7935bc808c")
-
-    def test_quit(self):
-        with self.assertRaises(SystemExit):
-            self.cli.do_quit(self.cli)
-
-    def test_show_correct(self):
         with captured_output() as (out, err):
-            self.cli.do_show("BaseModel d3da85f2-499c-43cb-b33d-3d7935bc808c")
+            self.cli.do_show('BaseModel d3da85f2-499c-43cb-b33d-3d7935bc808c')
         output = out.getvalue().strip()
-        self.assertFalse("2017, 2, 11, 23, 48, 34, 339879" in output)
+        self.assertFalse('2017, 2, 11, 23, 48, 34, 339879' in output)
         self.assertTrue('2017, 2, 11, 23, 48, 34, 339743' in output)
 
     def test_show_error_no_args(self):
@@ -70,21 +103,6 @@ class Test_Console(unittest.TestCase):
             self.cli.do_show("d3da85f2-499c-43cb-b33d-3d7935bc808c")
         output = out.getvalue().strip()
         self.assertEqual(output, "** instance id missing **")
-
-    def test_create(self):
-        with captured_output() as (out, err):
-            self.cli.do_create('')
-        output = out.getvalue().strip()
-        self.assertEqual(output, "Usage: create BaseModel")
-
-        with captured_output() as (out, err):
-            self.cli.do_create("BaseModel")
-        output = out.getvalue().strip()
-
-        with captured_output() as (out, err):
-            self.cli.do_show("BaseModel {}".format(output))
-        output2 = out.getvalue().strip()
-        self.assertTrue(output in output2)
 
     def test_destroy_correct(self):
         test_args = {'updated_at': datetime(2017, 2, 12, 00, 31, 53, 331997),
@@ -131,9 +149,8 @@ class Test_Console(unittest.TestCase):
         testmodel = BaseModel(test_args)
         testmodel.save()
         with captured_output() as (out, err):
-            self.cli.do_all("")
+            self.cli.do_all('')
         output = out.getvalue().strip()
-        self.assertTrue("d3da85f2-499c-43cb-b33d-3d7935bc808c" in output)
         self.assertTrue("f519fb40-1f5c-458b-945c-2ee8eaaf4900" in output)
         self.assertFalse("123-456-abc" in output)
 
@@ -142,7 +159,7 @@ class Test_Console(unittest.TestCase):
             self.cli.do_all("BaseModel")
         output = out.getvalue().strip()
         self.assertTrue(len(output) > 0)
-        self.assertTrue("d3da85f2-499c-43cb-b33d-3d7935bc808c" in output)
+        self.assertTrue("f519fb40-1f5c-458b-945c-2ee8eaaf4900" in output)
 
     def test_all_error_invalid_class(self):
         with captured_output() as (out, err):
