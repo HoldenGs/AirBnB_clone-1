@@ -38,9 +38,8 @@ class test_DBStorage(unittest.TestCase):
     def test_new(self):
         new_obj = State()
         new_obj.name = "Montana"
-        self.store.new(new_obj)
-        self.assertTrue("Montana" in self.store.all())
-        self.store.save(new_obj)
+        new_obj.save()
+        self.assertTrue(len(self.store.all()), 1)
 
     def test_save(self):
         self.store.reload()
@@ -48,7 +47,7 @@ class test_DBStorage(unittest.TestCase):
         new_obj.name = 'Colorado'
         self.store.new(new_obj)
         self.store.save()
-        self.assertEqual(len(self.store.all()), 0)
+        self.assertEqual(len(self.store.all()), 4)
 
     def test_delete(self):
         new_obj = State()
@@ -59,10 +58,11 @@ class test_DBStorage(unittest.TestCase):
         self.assertFalse(new_obj in self.store.all())
 
     def test_reload(self):
-        test_len = len(self.store.all())
-        self.assertEqual(test_len, 0)
         new_obj = City()
         self.store.new(new_obj)
         self.store.reload()
         test_len = len(self.store.all())
         self.assertEqual(test_len, 3)
+        self.store.reload()
+        for value in self.store.all().values():
+            self.assertIsInstance(value.created_at, datetime)
