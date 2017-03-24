@@ -8,7 +8,6 @@ from models.engine.db_storage import DBStorage
 from models import *
 
 
-
 @unittest.skipIf(getenv('HBNB_TYPE_STORAGE') != 'db',
                  'Storage type is not database')
 class test_DBStorage(unittest.TestCase):
