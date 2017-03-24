@@ -1,8 +1,11 @@
 import unittest
 from datetime import datetime
 from models import *
+from os import getenv
 
 
+@unittest.skipIf(getenv('HBNB_TYPE_STORAGE') == 'db',
+                 "BaseModel isn't a database table")
 class Test_BaseModel(unittest.TestCase):
     """
     Test the base model class
@@ -22,7 +25,7 @@ class Test_BaseModel(unittest.TestCase):
         self.assertIsInstance(self.model1, BaseModel)
         self.assertTrue(hasattr(self.model1, "created_at"))
         self.assertTrue(hasattr(self.model1, "id"))
-        self.assertFalse(hasattr(self.model1, "updated_at"))
+        self.assertTrue(hasattr(self.model1, "updated_at"))
 
     def test_reinstantiation(self):
         self.assertIsInstance(self.model2, BaseModel)
@@ -32,9 +35,10 @@ class Test_BaseModel(unittest.TestCase):
                          datetime(2017, 2, 10, 2, 6, 55, 258849))
 
     def test_save(self):
-        self.assertFalse(hasattr(self.model1, "updated_at"))
+        self.assertFalse(hasattr(self.model1, "name"))
+        self.model1.name = 'Ben Carson'
         self.model1.save()
-        self.assertTrue(hasattr(self.model1, "updated_at"))
+        self.assertTrue(hasattr(self.model1, "name"))
         old_time = self.model2.updated_at
         self.model2.save()
         self.assertNotEqual(old_time, self.model2.updated_at)
