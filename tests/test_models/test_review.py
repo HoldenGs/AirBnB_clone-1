@@ -1,6 +1,7 @@
 import unittest
 from datetime import datetime
 from models import *
+from os import getenv
 
 
 class Test_ReviewModel(unittest.TestCase):
@@ -13,9 +14,14 @@ class Test_ReviewModel(unittest.TestCase):
         self.assertTrue(hasattr(self.model, "place_id"))
         self.assertTrue(hasattr(self.model, "user_id"))
         self.assertTrue(hasattr(self.model, "text"))
-        self.assertEqual(self.model.place_id, "")
-        self.assertEqual(self.model.user_id, "")
-        self.assertEqual(self.model.text, "")
+        if getenv('HBNB_TYPE_STORAGE') == 'db':
+            self.assertEqual(self.model.place_id, None)
+            self.assertEqual(self.model.user_id, None)
+            self.assertEqual(self.model.text, None)
+        else:
+            self.assertEqual(self.model.place_id, "")
+            self.assertEqual(self.model.user_id, "")
+            self.assertEqual(self.model.text, "")
 
 
 if __name__ == "__main__":
