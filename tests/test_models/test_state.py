@@ -10,6 +10,7 @@ class Test_StateModel(unittest.TestCase):
 
     def setUp(self):
         self.model = State()
+        self.model.name = ''
         self.model.save()
 
     def test_var_initialization(self):

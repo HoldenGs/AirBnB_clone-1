@@ -8,11 +8,8 @@ class Test_ReviewModel(unittest.TestCase):
     Test the review model class
     """
 
-    def setUp(self):
-        self.model = Review()
-        self.model.save()
-
     def test_var_initialization(self):
+        self.model = Review()
         self.assertTrue(hasattr(self.model, "place_id"))
         self.assertTrue(hasattr(self.model, "user_id"))
         self.assertTrue(hasattr(self.model, "text"))

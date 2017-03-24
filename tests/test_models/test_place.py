@@ -8,34 +8,26 @@ class Test_PlaceModel(unittest.TestCase):
     Test the place model class
     """
 
-    def setUp(self):
-        self.model = Place()
-        self.model.save()
+    def test_simple_initialization(self):
+        """initialization without arguments"""
+        model = Place()
+        self.assertTrue(hasattr(model, "id"))
+        self.assertTrue(hasattr(model, "created_at"))
+        self.assertTrue(hasattr(model, "city_id"))
+        self.assertTrue(hasattr(model, "user_id"))
+        self.assertTrue(hasattr(model, "name"))
+        self.assertTrue(hasattr(model, "description"))
+        self.assertTrue(hasattr(model, "number_rooms"))
+        self.assertTrue(hasattr(model, "number_bathrooms"))
+        self.assertTrue(hasattr(model, "max_guest"))
+        self.assertTrue(hasattr(model, "price_by_night"))
+        self.assertTrue(hasattr(model, "latitude"))
+        self.assertTrue(hasattr(model, "longitude"))
 
     def test_var_initialization(self):
-        self.assertTrue(hasattr(self.model, "city_id"))
-        self.assertTrue(hasattr(self.model, "user_id"))
-        self.assertTrue(hasattr(self.model, "name"))
-        self.assertTrue(hasattr(self.model, "description"))
-        self.assertTrue(hasattr(self.model, "number_rooms"))
-        self.assertTrue(hasattr(self.model, "number_bathrooms"))
-        self.assertTrue(hasattr(self.model, "max_guest"))
-        self.assertTrue(hasattr(self.model, "price_by_night"))
-        self.assertTrue(hasattr(self.model, "latitude"))
-        self.assertTrue(hasattr(self.model, "longitude"))
-        self.assertTrue(hasattr(self.model, "amenities"))
-        self.assertEqual(self.model.city_id, "")
-        self.assertEqual(self.model.user_id, "")
-        self.assertEqual(self.model.name, "")
-        self.assertEqual(self.model.description, "")
-        self.assertEqual(self.model.number_rooms, 0)
-        self.assertEqual(self.model.number_bathrooms, 0)
-        self.assertEqual(self.model.max_guest, 0)
-        self.assertEqual(self.model.price_by_night, 0)
-        self.assertEqual(self.model.latitude, 0.0)
-        self.assertEqual(self.model.longitude, 0.0)
-        self.assertEqual(self.model.amenities, [''])
-
+        """Check default type"""
+        model = Place()
+        self.assertIsInstance(model.created_at, datetime)
 
 if __name__ == "__main__":
     unittest.main()
