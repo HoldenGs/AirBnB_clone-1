@@ -5,7 +5,6 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 
-
 @app.route('/states_list')
 def states_list():
     states = sorted(storage.all('State').values(),
@@ -16,7 +15,6 @@ def states_list():
 @app.teardown_appcontext
 def close_session(self):
     storage.close()
-
 
 
 if __name__ == '__main__':
