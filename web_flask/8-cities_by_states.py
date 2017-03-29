@@ -8,6 +8,12 @@ app = Flask(__name__)
 
 @app.route('/cities_by_states')
 def cities_by_states():
+    states = sorted(storage.all('State').values(),
+                    key=lambda state: state.name)
+    return render_template('8-cities_by_states.html', states=states)
+
+
+"""
     if getenv('HBNB_TYPE_STORAGE', None) == 'db':
         states = sorted(storage.all('State').values(),
                         key=lambda state: state.name)
@@ -20,7 +26,7 @@ def cities_by_states():
             for state in states:
                 if city.state_id == state.id:
                     state.cities.append(city)
-    return render_template('8-cities_by_states.html', states=states)
+"""
 
 
 @app.teardown_appcontext
