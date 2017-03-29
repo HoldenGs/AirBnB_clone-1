@@ -10,6 +10,7 @@ from models.review import Review
 from os import environ, getenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm.scoping import scoped_session
 from models.base_model import Base
 
 
@@ -45,7 +46,9 @@ class DBStorage:
     def delete(self, obj=None):
         self.__session.delete(obj)
 
+    def close(self):
+        self.__session.remove()
+
     def reload(self):
         Base.metadata.create_all(self.__engine)
-        Session = sessionmaker(bind=self.__engine)
-        self.__session = Session()
+        self.__session = scoped_session(sessionmaker(bind=self.__engine))

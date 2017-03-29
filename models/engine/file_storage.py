@@ -28,6 +28,9 @@ class FileStorage:
     def delete(self, obj=None):
         self.__objects.pop(obj, None)
 
+    def close(self):
+        self.reload()
+
     def reload(self):
         try:
             with open(FileStorage.__file_path,
