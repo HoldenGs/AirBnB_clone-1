@@ -11,8 +11,15 @@ class FileStorage:
     def __init__(self):
         self.reload()
 
-    def all(self):
-        return FileStorage.__objects
+    def all(self, cls=None):
+        if cls:
+            objects = {}
+            for k, v in FileStorage.__objects.items():
+                if v.__class__.__name__ == cls:
+                    objects[k] = v
+            return objects
+        else:
+            return FileStorage.__objects
 
     def new(self, obj):
         if obj is not None:
@@ -27,9 +34,6 @@ class FileStorage:
 
     def delete(self, obj=None):
         self.__objects.pop(obj, None)
-
-    def close(self):
-        self.reload()
 
     def reload(self):
         try:
@@ -46,3 +50,6 @@ class FileStorage:
                     FileStorage.__objects[k] = eval(cls)(temp[k])
         except Exception as e:
             pass
+
+    def close(self):
+        self.reload()
