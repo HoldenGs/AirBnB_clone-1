@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 from os import getenv
+import models
 from models import *
 from sqlalchemy import Column, String, Table
 from sqlalchemy.orm import relationship, backref
@@ -20,6 +21,6 @@ class State(BaseModel, Base):
     if getenv('HBNB_TYPE_STORAGE', None) != 'db':
         @property
         def cities(self):
-            cities = self.storage.all('City')
+            cities = models.storage.all('City')
             return [city for city in cities.values()
                     if city.state_id == self.id]
