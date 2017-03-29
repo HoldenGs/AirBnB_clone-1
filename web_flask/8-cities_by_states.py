@@ -5,14 +5,6 @@ from models import storage
 from flask import Flask, render_template
 app = Flask(__name__)
 
-"""
-        states = []
-        for c, s in storage.__session.query(City, State).join(State).order_by(City.name):
-            if s not in states:
-                states.append(s)
-            else:
-                states[states.index(s)].cities.append(c)
-"""
 
 @app.route('/cities_by_states')
 def cities_by_states():
