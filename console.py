@@ -5,7 +5,6 @@ from models import *
 
 class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb)'
-
     valid_classes = ["BaseModel", "User", "State",
                      "City", "Amenity", "Place", "Review"]
 
@@ -80,8 +79,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
         elif args in HBNBCommand.valid_classes:
-            all_objs = {k: v for (k, v) in storage.all().items()
-                        if isinstance(v, eval(args))}
+            all_objs = {k: v for (k, v) in storage.all(args).items()}
         elif len(args) == 0:
             all_objs = storage.all()
         else:
