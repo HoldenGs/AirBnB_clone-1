@@ -31,10 +31,14 @@ class DBStorage:
 
     def all(self, cls=None):
         objects = {}
-        for cls in self.classes:
-            cls = self.classes[cls]
+        if cls:
             for object in self.__session.query(cls).all():
                 objects[object.id] = object
+        else:
+            for cls in self.classes:
+                cls = self.classes[cls]
+                for object in self.__session.query(cls).all():
+                    objects[object.id] = object
         return objects
 
     def new(self, obj):
