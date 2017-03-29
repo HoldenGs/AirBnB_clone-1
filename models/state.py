@@ -23,6 +23,5 @@ class State(BaseModel, Base):
             city_list = []
             cities = self.storage.all('City')
             for city in cities.values():
-                if city.state_id == self.id:
-                    city_list.append(city)
+                city_list.append(city)
             return city_list
