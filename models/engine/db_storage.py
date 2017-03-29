@@ -32,6 +32,7 @@ class DBStorage:
     def all(self, cls=None):
         objects = {}
         if cls:
+            cls = self.classes[cls]
             for object in self.__session.query(cls).all():
                 objects[object.id] = object
         else:
