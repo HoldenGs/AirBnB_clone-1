@@ -25,3 +25,4 @@ class State(BaseModel, Base):
             for city in cities.values():
                 if isinstance(city, eval('City')):
                     city_list += city
+            return city_list
