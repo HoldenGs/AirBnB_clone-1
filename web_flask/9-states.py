@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 
-from os import getenv
 from models import storage
 from flask import Flask, render_template
 app = Flask(__name__)
@@ -18,10 +17,7 @@ def states():
 @app.route('/states/<string:id>')
 def state_cities(id):
     states = storage.all('State').values()
-    print(states)
-    print(id)
     states = [state for state in states if state.id == id]
-    print(states)
     route = 'state_cities'
     return render_template('9-states.html',
                            states=states, route=route)
