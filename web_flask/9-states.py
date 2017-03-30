@@ -18,7 +18,10 @@ def states():
 def state_cities(id):
     states = storage.all('State').values()
     states = [state for state in states if state.id == id]
-    route = 'state_cities'
+    if states == []:
+        route = 'none_found'
+    else:
+        route = 'state_cities'
     return render_template('9-states.html',
                            states=states, route=route)
 
