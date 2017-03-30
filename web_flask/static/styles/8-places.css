@@ -3,6 +3,7 @@
 }
 
 article {
+    z-index: -1;
     position: relative;
     width: 390px;
     padding: 20px;
