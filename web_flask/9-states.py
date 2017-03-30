@@ -17,7 +17,10 @@ def states():
 @app.route('/states/<string:id>')
 def state_cities(id):
     states = storage.all('State').values()
-    states = [state for state in states if state.id == id]
+    for state in states:
+        if state.id == id:
+            states = state
+    print(state)
     if states == []:
         route = 'none_found'
     else:
