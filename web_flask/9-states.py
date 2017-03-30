@@ -5,7 +5,7 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 
-@app.route('/states', defaults={'id': None})
+@app.route('/states', defaults={'id': None}, strict_slashes=False)
 @app.route('/states/<id>')
 def state_cities(id):
     states = sorted(storage.all('State').values(),
