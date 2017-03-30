@@ -20,6 +20,7 @@ h2 {
 }
 
 article h2 {
+    min-height: 50px;
     width: 300px;
     text-indent: 0;
     margin: 22px 0;
