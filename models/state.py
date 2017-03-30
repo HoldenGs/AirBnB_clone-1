@@ -13,16 +13,12 @@ class State(BaseModel, Base):
         name = Column(String(128), nullable=False)
         cities = relationship('City', backref='state')
     else:
+        name = ""
         @property
         def cities(self):
             cities = models.storage.all('City')
-            city_list = []
-            for city in cities.values():
-                if city.state_id == self.id:
-                    city_list.append(city_list)
-            return city_list
-
-        name = ""
+            return [city for city in cities.values()
+                    if city.state_id == self.id]
 
     def __init__(self, *args, **kwargs):
         super(State, self).__init__(*args, **kwargs)
