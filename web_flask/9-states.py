@@ -10,7 +10,7 @@ app = Flask(__name__)
 def state_cities(id):
     states = sorted(storage.all('State').values(),
                     key=lambda state: state.name)
-    if id == None:
+    if id is None:
         route = 'states'
     else:
         states_list = states
