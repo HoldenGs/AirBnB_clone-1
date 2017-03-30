@@ -17,10 +17,10 @@ def state_cities(id):
         states = None
         for state in states_list:
             if state.id == id:
-                states = state
-        if states:
-            route = 'state_cities'
-        else:
+                route = 'state_cities'
+                return render_template('9-states.html',
+                                       states=state, route=route)
+        if states is None:
             route = 'none_found'
     return render_template('9-states.html',
                            states=states, route=route)
