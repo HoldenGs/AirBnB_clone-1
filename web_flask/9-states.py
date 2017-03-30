@@ -16,15 +16,15 @@ def states():
 
 @app.route('/states/<string:id>')
 def state_cities(id):
-    states = storage.all('State').values()
-    for state in states:
+    states_list = storage.all('State').values()
+    states = None
+    for state in states_list:
         if state.id == id:
             states = state
-    print(state)
-    if states == []:
-        route = 'none_found'
-    else:
+    if states:
         route = 'state_cities'
+    else:
+        route = 'none_found'
     return render_template('9-states.html',
                            states=states, route=route)
 
